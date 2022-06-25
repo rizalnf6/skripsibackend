@@ -18,7 +18,7 @@ class ProductController extends Controller
         $tags = $request->input('tags');
         $categories = $request->input('categories');
 
-        $price_from = $request->input('price_from');
+        $price_from = $request->input('price_form');
         $price_to = $request->input('price_to');
 
         if($id)

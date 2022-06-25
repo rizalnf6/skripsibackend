@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Controllers\Hash;
 use Illuminate\Support\Str;
 use App\Http\Requests\UserRequest;
 use Yajra\DataTables\Facades\DataTables;
@@ -95,10 +96,16 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user)
     {
         $data = $request->all();
-        
+
+        if ($request->file('picturePath')) {
+            $data['picturePath'] = $request->file('picturePath')->store('assets/user', 'public');
+        }
+        $data['password'] = Hash::make($request->password);
+        $data['current_team_id'] = 1;
+        // dd($data);
         $user->update($data);
 
-        return redirect()->route('dashboard.user.index');
+        return redirect()->route('users.index');
     }
 
     /**
